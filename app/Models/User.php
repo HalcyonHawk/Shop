@@ -41,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * A user has many cart records. Multiple cart records make up the cart.
+     */
+    public function cart()
+    {
+      return $this->hasMany('App\Models\Cart', 'user_id', 'id');
+    }
 }

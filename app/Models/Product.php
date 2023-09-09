@@ -14,6 +14,16 @@ class Product extends Model
     public $timestamps = false;
     protected $guarded = [];
 
+    public function getProductDetailsAttribute()
+    {
+      return $this->productDetails;
+    }
+
+    public function getInStockProductDetailsAttribute()
+    {
+    return $this->productDetails()->where('stock', '>', 0)->get();
+    }
+
     /**
      * A product has many product details
      */

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_detail_id');
             //Keep track of when products are added to the cart
-            $table->timestamp('added_to_cart')->nullable();
+            $table->timestamp('added_at')->nullable();
 
         });
 

@@ -12,20 +12,14 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //Get all previous orders for the user logged in
-        //TODO: Edit to only select needed fields
-        $orders = Order::with('product_details')
-            ->where('user_id', Auth::user()->id)
-            ->orderBy('order_date', 'desc')
+        //Get orders for user logged in with details. Display lasted first
+        $orders = Auth::user()
+            ->orders()
+            ->with('productDetails')
+            ->latest() //orderBy desc
             ->get();
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return view('order.index', ['order' => $order]);
     }
 
     /**
@@ -33,7 +27,16 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //When payment successful, create order record
+        //When payment successful
+
+        //Create order
+        $order = new Order;
+        $order->user_id = auth()->id;
+        $order->ordered_at = now();
+        //Add product details to link table when saving the order
+        $order->save()->attach($request->productDetailIds);
+
+        return response('Order Successful', 201);
     }
 
     /**
@@ -41,6 +44,9 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //Show an order. Include details of a order
+        //Eager load product details for the order
+        $order->load('productDetails');
+
+        return view('order.show', ['order' => $order]);
     }
 }

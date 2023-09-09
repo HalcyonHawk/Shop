@@ -27,7 +27,6 @@ class ProductDetail extends Model
      */
     public function order()
     {
-        //FIXME: Use link table
         return $this->belongsToMany('App\Models\Order', 'product_id', 'product_id');
     }
 }

@@ -12,6 +12,7 @@ class PaymentController extends Controller
     public function create()
     {
         //Enter card details
+        return view('payment.index');
     }
 
     /**
@@ -21,6 +22,7 @@ class PaymentController extends Controller
     {
         //Submit payment
         //Either fail and go back to enter card details
-        //Or go to final page to display order made and confirmed
+        //Or go to final page to final step of saving the order
+        return redirect()->route('order.store');
     }
 }

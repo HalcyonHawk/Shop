@@ -27,7 +27,6 @@ class Order extends Model
      */
     public function productDetail()
     {
-        //FIXME: Change relationship to use the link table
         return $this->hasMany('App\Models\ProductDetail', 'product_detail_id', 'product_detail_id');
     }
 }
