@@ -36,7 +36,10 @@ class OrderController extends Controller
         //Add product details to link table when saving the order
         $order->save()->attach($request->productDetailIds);
 
-        return response('Order Successful', 201);
+        //TODO: Delete items from cart now
+
+        //After making the order, go to page to view the order
+        return redirect()->route('order.show', ['order' => $order]);
     }
 
     /**

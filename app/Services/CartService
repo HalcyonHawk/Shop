@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Services;
+
+class CartService
+{
+    /**
+     * Calculate total price of items in the cart
+     */
+    public function getTotalPriceFromCart()
+    {
+        //Calc total from adding items in cart
+        $user = Auth::user();
+
+        //Get cart items for user logged in.
+        $total = $user->cart()
+            //Eager load product details ready for adding price
+            ->with('productDetail')
+            //Get cart items first to avoid N+1 queries
+            ->get()
+            //Get sum of cart items using prodict detail relationship
+            ->sum(function ($item) {
+                return $item->productDetail->price;
+            });
+
+        return $total;
+    }
+}

@@ -20,7 +20,8 @@ Route::get('/', function () {
 //Not logged in
 
 //View products
-Route::resource('product', 'App\Http\Controllers\ProductController')->only('index', 'show');
+Route::resource('product', 'App\Http\Controllers\ProductController')->only('index');
+Route::resource('product_detail', 'App\Http\Controllers\ProductDetailController')->only('show');
 
 //-----------------------------------------------------------------------------------------
 

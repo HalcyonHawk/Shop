@@ -1,21 +1,44 @@
+@extends('layouts.app')
 
-{{-- View items in the cart --}}
-@foreach ($cartItems as $item)
-    $item->productDetail->price
+@section('content')
 
-    {{-- Remove item from cart --}}
-    <button
-    class="btn btn-danger"
-    data-cart-id="{{ $cartItem->cart_id }}"
-    >
-    Remove
-    </button>
+<h1>Cart</h1>
 
-@endforeach
+<table class="table">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{-- View items in the cart --}}
+    @foreach ($cartItems as $item)
+      <tr>
+        <td>
+          {{ $item->productDetail->product->name }}
+        </td>
+        <td>
+          {{ $item->productDetail->price }}
+        </td>
+        {{-- Remove item from cart --}}
+        <td>
+            <form action="{{ route('cart.destroy', $item) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+            </form>
+        </td>
+      </tr>
+    @endforeach
+  </tbody>
+</table>
 
 {{-- Go to checkout (shipping details, then payment) --}}
-<button
-    class="btn btn-primary"
->
-Checkout
-</button>
+<div>
+  <a href="{{ route('shipping_detail.create') }}" class="btn btn-primary">Checkout</a>
+</div>
+
+@endsection

@@ -23,7 +23,8 @@ class ProductController extends Controller
         // //Only get needed fields
         // }])->get(['product_id', 'name', 'productDetails.image', 'productDetails.colour', 'productDetails.price']);
 
-        $products = Product::get(['name', 'in_stock_product_details']);
+        $products = Product::get(['name', 'in_stock_product_details'])
+            ->simplePaginate(15);
 
 
         return view('product.index', ['products' => $products]);
@@ -37,23 +38,5 @@ class ProductController extends Controller
         //       $detail->price;
         //     }
         //   }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Product $product)
-    {
-        //Show a product in more detail including its details
-        //Moved logic to model attribute to avoid repeating code
-        //$product = Product::with('productDetails')->find($product);
-
-        return view('product.show', ['product' => $product]);
-
-        //View notes
-        // foreach ($product->productDetails as $detail) {
-        //     $detail->color;
-        //     $detail->price;
-        // }
     }
 }

@@ -3,17 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\ShippingDetail;
-use Illuminate\Http\Request;
 use App\Http\Requests\ShippingDetailCreateRequest;
+use App\Services\CartService;
+
 
 class ShippingDetailController extends Controller
 {
+    public function __construct()
+    {
+        $this->cartService = new CartService;
+    }
+
     /**
      * Show the form for saving shipping details.
      * Accessed when user clicks checkout button from cart page
      */
     public function create()
     {
+        //Get total using service class to avoid repeated code in paymentcontroller
+        $total = $this->cartService->getTotalPriceFromCart();
+
         //Enter shipping details
         return view('shippingDetail.create');
     }
@@ -33,8 +42,7 @@ class ShippingDetailController extends Controller
 
         $shipping_detail->save();
 
-        // Redirect to the shipping details page.
-        return redirect()->route('payment.index');
-        //Then go to payment step (payment)
+        //Then go to next step (payment)
+        return redirect()->route('payment.create');
     }
 }

@@ -15,6 +15,14 @@ class Order extends Model
     protected $guarded = [];
 
     /**
+     * Calc total price
+     */
+    public function getTotalAttribute()
+    {
+      return $this->productDetails->sum('price');
+    }
+
+    /**
      * An order belongs to a user
      */
     public function user()

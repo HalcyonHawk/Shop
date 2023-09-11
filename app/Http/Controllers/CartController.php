@@ -12,6 +12,8 @@ class CartController extends Controller
      */
     public function index()
     {
+        //TODO: Check that items in cart are still avaliable as user goes onto cart page
+
         //Get logged in user
         $user = Auth::user();
         //Display items in the cart for logged in user
