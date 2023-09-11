@@ -1,3 +1,4 @@
+{{-- No longer used. Go to productDetail/index instead --}}
 @extends('layouts.app')
 
 @section('content')

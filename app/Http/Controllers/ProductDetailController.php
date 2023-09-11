@@ -8,7 +8,23 @@ use Illuminate\Http\Request;
 class ProductDetailController extends Controller
 {
     /**
-     * Display the specified resource.
+     * Display in stock products.
+     */
+    public function index()
+    {
+        //Get in stock product details using scope set in model
+        $productDetails = ProductDetail::inStock()
+            //Eager load product name. Description not needed at this point
+            ->with('product:product_id,name')
+            ->simplePaginate(15);
+
+        return view('productDetail.index', [
+            'productDetails' => $productDetails
+        ]);
+    }
+
+    /**
+     * Display the specified product.
      */
     public function show(ProductDetail $productDetail)
     {
