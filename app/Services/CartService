@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use APp\Models\User;
+use App\Models\Cart;
+
 class CartService
 {
     /**
@@ -24,5 +27,23 @@ class CartService
             });
 
         return $total;
+    }
+
+    /**
+     * Remove unavailable items from the cart
+     */
+    public function removeUnavailableItems()
+    {
+        //Get all cart items
+        $cartItems = Auth::user()->cart;
+        //Filter for unavalible items
+        $unavailableItems = $cartItems->filter(function ($item) {
+            return ! $item->isAvailable();
+        });
+
+        if ($unavailableItems->count() > 0) {
+            //Remove unavailable items
+            $unavailableItems->each->delete();
+        }
     }
 }

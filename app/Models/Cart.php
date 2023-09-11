@@ -15,6 +15,14 @@ class Cart extends Model
     protected $guarded = [];
 
     /**
+     * Check if product details in the cart are still in stock
+     */
+    public function isAvailable()
+    {
+        return $this->productDetail->isInStock();
+    }
+
+    /**
      * A cart belongs to a user
      */
     public function user()

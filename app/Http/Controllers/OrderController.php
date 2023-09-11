@@ -29,14 +29,26 @@ class OrderController extends Controller
     {
         //When payment successful
 
+        $userId = auth()->id;
+
         //Create order
         $order = new Order;
-        $order->user_id = auth()->id;
+        $order->user_id = $userId;
         $order->ordered_at = now();
         //Add product details to link table when saving the order
         $order->save()->attach($request->productDetailIds);
 
-        //TODO: Delete items from cart now
+        //Get users cart
+        $cartItems = auth()->user()->cart;
+
+        foreach ($cartItems as $item) {
+            //Reduce product detail stock
+            ProductDetail::where('product_detail_id', $item->product_detail_id)
+                ->decrement('stock');
+
+            //Delete item from cart for the user
+            $item->delete();
+        }
 
         //After making the order, go to page to view the order
         return redirect()->route('order.show', ['order' => $order]);

@@ -4,18 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use Illuminate\Http\Request;
+use App\Services\CartService;
 
 class CartController extends Controller
 {
+    public function __construct()
+    {
+        $this->cartService = new CartService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //TODO: Check that items in cart are still avaliable as user goes onto cart page
-
         //Get logged in user
         $user = Auth::user();
+
+        //Remove unavailable items from the cart
+        //TODO: Add a message to inform the user why items have been removed
+        $this->cartService->removeUnavailableItems();
+
         //Display items in the cart for logged in user
         $cartItems = $user->cart()
             //Eager load product details to get price and code of item in the cart
@@ -33,6 +42,12 @@ class CartController extends Controller
         //Verify user is logged in, if not send to login screen
         if (auth()->guest()) {
             return redirect()->route('login');
+        }
+
+        //Check for if product detail is already in cart.
+        $this->authorize('addToCart', ProductDetail::find($request->product_detail_id));
+        if ($existing) {
+          return redirect()->back()->with('message', 'Product already in cart. You can only buy 1 of each product');
         }
 
         //Add item to cart
