@@ -15,6 +15,15 @@ class ProductDetail extends Model
     protected $guarded = [];
 
     /**
+     * Get in stock product details from Eloquent query
+     * Eg. ProductDetail::inStock()->get();
+     */
+    public function scopeInStock($query)
+    {
+      return $query->where('stock', '>', 0);
+    }
+
+    /**
      * A product detail belongs to a product
      */
     public function product()
