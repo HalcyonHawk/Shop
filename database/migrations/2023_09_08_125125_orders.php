@@ -13,7 +13,7 @@ return new class extends Migration
     {
         //An order has many product_details. Product details belong to many orders. So link table order_product added
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('order_id');
             $table->unsignedBigInteger('user_id');
             //Keep track of when order was made
             $table->date('order_made');

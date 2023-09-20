@@ -6,6 +6,8 @@
 
 <h1>Previous Orders</h1>
 
+@if($orders)
+
 @foreach ($orders as $order)
 <div class="d-flex overflow-auto my-4">
     {{-- View an order in more detail --}}
@@ -24,5 +26,11 @@
 
 </div>
 @endforeach
+
+@else
+
+<div class="alert alert-info">No previous orders.</div>
+
+@endif
 
 @endsection

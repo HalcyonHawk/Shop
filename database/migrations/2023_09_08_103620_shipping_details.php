@@ -13,16 +13,12 @@ return new class extends Migration
     {
         //TODO: Change to use an API since addresses get saved in lots of ways
         Schema::create('shipping_details', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('shipping_detail_id');
             $table->unsignedBigInteger('user_id');
             $table->string('address_1')->nullable();
             $table->string('town')->nullable();
             $table->string('postcode');
         });
-
-        Schema::table('shipping_details', function($table) {
-            $table->foreign('user_id')->references('user_id')->on('users');
-         });
     }
 
     /**

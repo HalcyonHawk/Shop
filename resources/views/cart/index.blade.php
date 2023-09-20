@@ -4,6 +4,8 @@
 
 <h1>Cart</h1>
 
+@if($cartItems->count())
+
 <table class="table">
   <thead>
     <tr>
@@ -40,5 +42,9 @@
 <div>
   <a href="{{ route('shipping_detail.create') }}" class="btn btn-primary">Checkout</a>
 </div>
+
+@else
+<div class="alert alert-info">No items in cart</div>
+@endif
 
 @endsection

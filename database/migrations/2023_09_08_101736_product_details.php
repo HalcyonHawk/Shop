@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('product_details', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('product_detail_id');
             $table->unsignedBigInteger('product_id');
             $table->string('colour');
             //TODO: Add seperate images table and link to it so that a product detail can have multiple images
@@ -24,11 +24,6 @@ return new class extends Migration
             $table->integer('stock');
 
         });
-
-        //Link to product table
-        Schema::table('product_details', function($table) {
-            $table->foreign('product_id')->references('product_id')->on('products')->onDelete('cascade');
-         });
     }
 
     /**

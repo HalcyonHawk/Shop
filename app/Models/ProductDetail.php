@@ -9,8 +9,8 @@ class ProductDetail extends Model
 {
     use HasFactory;
 
-    protected $table = 'cart';
-    protected $primaryKey = 'cart_id';
+    protected $table = 'product_details';
+    protected $primaryKey = 'product_detail_id';
     public $timestamps = false;
     protected $guarded = [];
 

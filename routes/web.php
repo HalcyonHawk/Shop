@@ -13,9 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Start on view product page
+Route::get('/', 'App\Http\Controllers\ProductDetailController@index');
 
 //Not logged in
 
